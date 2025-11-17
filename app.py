@@ -19,7 +19,14 @@ def create_task():
 
 @app.route('/tasks', methods=['GET'])
 def get_tasks():
-    return jsonify([task.to_dict() for task in tasks])
+    tasks_list = [task.to_dict() for task in tasks]
+
+    response = {
+        "tasks": tasks_list,
+        "total_tasks": len(tasks_list)
+    }
+
+    return jsonify(response), 200
 
 
 @app.route('/tasks/<int:task_id>', methods=['GET'])
@@ -37,10 +44,10 @@ def update_task(task_id):
         if t.id == task_id:
             task = t
             break
-        
-        if task == None:
-            return jsonify({"message": "Tarefa não encontrada."}), 404
-        
+
+    if task == None:
+        return jsonify({"message": "Tarefa não encontrada."}), 404 
+    
     data = request.get_json()
     task.title = data['title']
     task.description = data['description']

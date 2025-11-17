@@ -9,6 +9,6 @@ class Task:
         return {
             'id': self.id,
             'title': self.title,
-            'descripttion': self.description,
+            'description': self.description,
             'completed': self.completed
         }
